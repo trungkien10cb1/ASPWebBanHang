@@ -1,0 +1,105 @@
+﻿@model IEnumerable<WebsiteBanHang.Models.Entities.OrderDetail>
+@using WebsiteBanHang.Models.Entities
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
+    Order giohang = (Order) ViewBag.giohang;
+    ShopLapModel modelData = new ShopLapModel();
+    Customer customer = modelData.Customers.Find(giohang.makhachhang);
+    Product pro;
+}
+@using (Html.BeginForm("UpdateStatus", "Order"))
+{
+    <div id="page-wrapper">
+        <div class="row">
+            <div class="col-lg-12">
+                <h1 class="page-header">Chi tiết đơn hàng</h1>
+            </div>
+            <!-- /.col-lg-12 -->
+        </div>
+        <div>
+            <dl class="dl-horizontal">
+                <dt>
+                    Người mua hàng:
+                </dt>
+                <dd>
+                    @customer.shipName
+                </dd>
+                <dt>
+                    Email:
+                </dt>
+                <dd>
+                    @customer.shipEmail
+                </dd>
+                <dt>
+                    Địa chỉ:
+                </dt>
+                <dd>
+                    @customer.shipMobile
+                </dd>
+                <dt>
+                    Số điện thoại:
+                </dt>
+                <dd>
+                    @customer.shipAddress
+                </dd>
+                <dt>
+                    Tình trạng đơn hàng:
+                </dt>
+                <dd>
+                    @giohang.status
+                </dd>
+            </dl>
+
+        </div>
+        <table class="table">
+            <tr>
+                <th>
+                    Tên sản phẩm
+                </th>
+                <th>
+                    Hình ảnh
+                </th>
+                <th>
+                    Nhà sản xuất
+                </th>
+                <th>
+                    Giá bán
+                </th>
+                <th>
+                    Số lượng
+                </th>
+
+            </tr>
+
+            @foreach (var item in Model)
+            {
+
+                pro = modelData.Products.Find(item.masanpham);
+                <tr>
+                    <td>
+                        @pro.tensanpham
+                    </td>
+                    <td>
+                        <img src=@pro.imglink style="width:100px; height:100px" />
+                    </td>
+                    <td>
+                        @pro.hangsanxuat
+                    </td>
+                    <td>
+                        @pro.dongia
+                    </td>
+                    <td>
+                        @item.soluong
+                    </td>
+
+                </tr>
+            }
+
+        </table>
+        <input type="submit" class="btn btn-default" onclick="return confirm('Xác nhận cập nhật trạng thái')" value="Hoàn tất hóa đơn"/>
+    </div>
+}
+
+
+    

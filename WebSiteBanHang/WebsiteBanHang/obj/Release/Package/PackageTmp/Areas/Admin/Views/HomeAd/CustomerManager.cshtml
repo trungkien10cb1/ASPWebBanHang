@@ -1,0 +1,69 @@
+﻿@using PagedList;
+@using PagedList.Mvc;
+@model IPagedList<WebsiteBanHang.Models.Entities.Customer>
+
+@{
+    ViewBag.Title = "CustomerManager";
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
+    int count = 0;
+}
+
+<div id="page-wrapper">
+
+    <div class="row">
+        <div class="col-lg-12">
+            <h1 class="page-header">Quản lý khách hàng</h1>
+        </div>
+        <!-- /.col-lg-12 -->
+    </div>
+
+
+    <table class="table">
+        <tr>
+            <th>
+                STT
+            </th>
+            <th>
+                Tên khách hàng
+            </th>
+            <th>
+                Số điện thoại
+            </th>
+            <th>
+                Địa chỉ khách hàng
+            </th>
+            <th>
+                Email khách hàng
+            </th>
+            <th></th>
+        </tr>
+
+        @foreach (var item in Model)
+        {
+            count++;
+            <tr>
+                <td>
+                    @count
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.shipName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.shipMobile)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.shipAddress)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.shipEmail)
+                </td>
+                <td>
+                    @Html.ActionLink("Sửa", "Edit", "Customer", new { ma = item.makhachhang }, null)
+                </td>
+            </tr>
+        }
+
+    </table>
+</div>
+
+    

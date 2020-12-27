@@ -1,0 +1,87 @@
+﻿@model WebsiteBanHang.Models.Entities.Product
+
+@{
+    ViewBag.Title = "EditDetail";
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+
+<div id="page-wrapper">
+    <div class="row">
+        <div class="col-lg-12">
+            <h1 class="page-header">Sửa cấu hình sản phẩm</h1>
+        </div>
+        <!-- /.col-lg-12 -->
+    </div>
+
+    @using (Html.BeginForm("EditProduct", "ProductManager"))
+    {
+        @Html.AntiForgeryToken()
+
+        <div class="form-horizontal">
+            <h4>Mã sản phẩm: @Model.ma</h4>
+            <hr />
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+            @Html.HiddenFor(model => model.ma)
+
+            <div class="form-group">
+                @Html.Label("Vi xử lý", htmlAttributes: new { @class = "control-label col-md-2" })
+                @*@Html.LabelFor(model => model.ProductDetail.vixuly, htmlAttributes: new { @class = "control-label col-md-2" })*@
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.ProductDetail.vixuly, new { htmlAttributes = new { @class = "form-control", @style="width: 300px" } })
+                    @Html.ValidationMessageFor(model => model.ProductDetail.vixuly, Model.ProductDetail.vixuly, new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.Label("Bộ nhớ Ram", htmlAttributes: new { @class = "control-label col-md-2" })
+                @*@Html.LabelFor(model => model.ProductDetail.ram, htmlAttributes: new { @class = "control-label col-md-2" })*@
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.ProductDetail.ram, new { htmlAttributes = new { @class = "form-control", @style = "width: 300px" } })
+                    @Html.ValidationMessageFor(model => model.ProductDetail.ram, Model.ProductDetail.ram, new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.Label("Ổ địa cứng", htmlAttributes: new { @class = "control-label col-md-2" })
+                @*@Html.LabelFor(model => model.ProductDetail.diacung, htmlAttributes: new { @class = "control-label col-md-2" })*@
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.ProductDetail.diacung, new { htmlAttributes = new { @class = "form-control", @style = "width: 300px" } })
+                    @Html.ValidationMessageFor(model => model.ProductDetail.diacung, Model.ProductDetail.diacung, new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.Label("Card đồ họa rời", htmlAttributes: new { @class = "control-label col-md-2" })
+                @*@Html.LabelFor(model => model.ProductDetail.vga, htmlAttributes: new { @class = "control-label col-md-2" })*@
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.ProductDetail.vga, new { htmlAttributes = new { @class = "form-control", @style = "width: 300px" } })
+                    @Html.ValidationMessageFor(model => model.ProductDetail.vga, Model.ProductDetail.vga, new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.Label("Màn hình", htmlAttributes: new { @class = "control-label col-md-2" })
+                @*@Html.LabelFor(model => model.ProductDetail.manhinh, "producttype", htmlAttributes: new { @class = "control-label col-md-2" })*@
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.ProductDetail.manhinh, new { htmlAttributes = new { @class = "form-control", @style = "width: 300px" } })
+                    @Html.ValidationMessageFor(model => model.ProductDetail.manhinh, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            
+
+            <div class="form-group">
+                <div class="col-md-offset-2 col-md-10">
+                    <input type="submit" value="Lưu thay đổi" class="btn btn-default" onclick="return confirm('Bạn có muốn sửa thông tin?'); "/>
+                </div>
+            </div>
+        </div>
+    }
+
+    <div>
+        @Html.ActionLink("Quay lại", "Edit", "ProductManager", new { id=Model.ma}, new { onclick= "confirm ('Bạn chưa lưu thay đổi! Bạn muốn rời mà không hoàn tất thay đổi?')"})
+    </div>
+</div>
+
+    

@@ -1,0 +1,65 @@
+﻿@using PagedList;
+@using PagedList.Mvc;
+@using WebsiteBanHang.Models.Entities
+@model WebsiteBanHang.Models.IndexData
+
+@{
+    ViewBag.Title = "ProductSearch";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    IPagedList<Product> listProduct = Model.listProductsType;
+    Product productDetail = new Product();
+}
+
+<div class="span9">
+    <ul class="breadcrumb">
+        <li><a href="/Home/Index">Home</a> <span class="divider">/</span></li>
+        <li class="active">Sản phẩm</li>
+    </ul>
+    @*<h3> Sản phẩm <small class="pull-right"> 40 sản phẩm có sẵn </small></h3>*@
+    <hr class="soft" />
+    <p>
+        Bán laptop uy tín
+    </p>
+    <hr class="soft" />
+    <form class="form-horizontal span6">
+        <div class="control-group">       
+        </div>
+    </form>
+
+    <br class="clr" />
+    <div class="tab-content">
+
+
+        <div class="tab-pane active" id="blockView">
+            <ul class="thumbnails">
+                @foreach (var items in listProduct)
+                {
+                    <li class="span3">
+                        <div class="thumbnail">
+                            <a href="/Home/ProductsDetail?ma=@items.ma"><img src=@items.imglink alt="" /></a>
+                            <div class="caption">
+                                <h5>@items.tensanpham</h5>
+                                <p style="font-size:x-small">
+                                    @items.mota
+                                </p>
+                                <h4 style="text-align:center">
+                                    <a class="btn" href="product_details.html">
+                                        <i class="icon-zoom-in"></i>
+                                    @{ string gia = double.Parse(items.dongia.ToString()).ToString("#,###") + "  VNĐ";}
+                                    </a> <a class="btn" href="/ShoppingCart/Add?ma=@items.ma&&soluong=1">Thêm vào <i class="icon-shopping-cart"></i></a> <a class="btn btn-primary" href="#">@gia</a>
+                                </h4>
+                            </div>
+                        </div>
+                    </li>
+                }
+
+            </ul>
+            <hr class="soft" />
+        </div>
+    </div>
+    <div class="pagination">
+        @Html.PagedListPager(Model.listProductsType, page => Url.Action("ProductSearch", new { page = page, type = ViewBag.chuoi }))
+    </div>
+    <br class="clr" />
+</div>
+

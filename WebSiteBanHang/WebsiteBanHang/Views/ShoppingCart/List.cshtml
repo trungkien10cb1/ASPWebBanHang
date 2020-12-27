@@ -1,0 +1,120 @@
+﻿@model WebsiteBanHang.Models.IndexData
+@using WebsiteBanHang.Models.Bean
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    List<ItemCart> list = Model.listItemCart;
+    ShoppingCart Cart = (ShoppingCart)Session["cart"];
+    ViewBag.Title = "List";
+}
+<div class="span9">
+    <ul class="breadcrumb">
+        <li><a href="index.html">Home</a> <span class="divider">/</span></li>
+        <li class="active"> SHOPPING CART</li>
+    </ul>
+    <h3>  SHOPPING CART [ <small>@Cart.GetAmount() Item(s) </small>]</h3>
+    <hr class="soft" />
+
+    @if (Cart.GetAmount() > 0)
+    {
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th>Tên sản phẩm</th>
+                    <th>Hình ảnh</th>
+                    <th>Mô tả</th>
+                    <th>Thay đổi số lượng</th>
+                    <th>Đơn giá</th>
+                    <th>Thành tiền</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in list)
+                {
+                    <tr>
+
+                        <td style="font-size: small">@item.Product.tensanpham</td>
+                        <td> <img src="@Url.Content(item.Product.imglink)" width="100" , height="100" /></td>
+                        <td>@item.Product.mota</td>
+                        <td>
+                            @*<div class="input-append"><input class="span1" style="max-width:34px" placeholder=@item.soluong id="appendedInputButtons" size="16" type="text"><button class="btn" type="button"><i class="icon-minus"></i></button><button class="btn" type="button"><i class="icon-plus"></i></button><button class="btn btn-danger" type="button"><i class="icon-remove icon-white"></i></button>	</div>*@
+                            <div class="input-append">
+                                <input class="span1" style="max-width:24px" placeholder=@item.soluong id="appendedInputButtons" size="10" type="text"><button class="btn" type="button">
+                                    <a class="icon-minus" href="/ShoppingCart/Sub?ma=@item.Product.ma&&soluong=1"></a>
+                                </button><button class="btn" type="button">
+                                    <a class="icon-plus" href="/ShoppingCart/Add?ma=@item.Product.ma&&soluong=1"></a>
+                                </button><button class="btn btn-danger" type="button">
+                                    <a class="icon-remove icon-white" href="/ShoppingCart/Delete?ma=@item.Product.ma"></a>
+                                </button>
+                            </div>
+                        </td>
+                        @{ string gia = double.Parse(item.Product.dongia.ToString()).ToString("#,###") + "  VNĐ";}
+                        <td>@gia</td>
+                        @{ string thanhtien = double.Parse(item.GetTotal().ToString()).ToString("#,###") + "  VNĐ";}
+                        <td>@thanhtien</td>
+                    </tr>
+                            }
+
+                <tr>
+                    <td colspan="5" style="text-align:right">Tổng tiền :</td>
+                    @{ string tongtien = double.Parse(Cart.GetTotalCart().ToString()).ToString("#,###") + "  VNĐ";}
+                    <td>@tongtien</td>
+                </tr>
+
+            </tbody>
+        </table>
+                        }
+                        else
+                        {
+                            <span>Chưa có sản phẩm nào trong giỏ hàng</span>
+                        }
+
+    @using (Html.BeginForm("DatHang", "ShoppingCart"))
+            {
+        <div class="form-horizontal">
+            <h4>Khách hàng</h4>
+            <hr />
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+            <div class="control-group">
+                <label class="control-label">Họ và tên <sup>*</sup></label>
+                <div class="col-md-10">
+                    <input type="text" name="shipName" />
+                </div>
+            </div>
+
+            <div class="control-group">
+                <label class="control-label">Email <sup>*</sup></label>
+                <div class="col-md-10">
+                    <input type="text" name="shipEmail" />
+                </div>
+            </div>
+
+            <div class="control-group">
+                <label class="control-label">Địa chỉ <sup>*</sup></label>
+                <div class="col-md-10">
+                    <input type="text" name="shipAddress" />
+                </div>
+            </div>
+
+            <div class="control-group">
+                <label class="control-label">Số điện thoại <sup>*</sup></label>
+                <div class="col-md-10">
+                    <input type="text" name="shipMobile" />
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-md-offset-2 col-md-10">
+                    @if (Cart.GetAmount() != 0)
+                    {
+                        <input type="submit" value="Đặt hàng" class="btn btn-large pull-right " onclick="return alert('Đặt hàng thành công!! Oder của bạn sẽ được giao')"></input>
+                    }
+
+                </div>
+            </div>
+        </div>
+    }
+
+
+    <a href="/Home/Index" class="btn btn-large"><i class="icon-arrow-left"></i> Tiếp tục mua hàng </a>
+    @*<a href="/ShoppingCart/DatHang" class="btn btn-large pull-right">Thanh toán <i class="icon-arrow-right"></i></a>*@
+
+</div>

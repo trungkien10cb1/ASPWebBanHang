@@ -1,0 +1,70 @@
+﻿@model WebsiteBanHang.Models.Entities.SubCategory
+
+@{
+    ViewBag.Title = "EditSubCategory";
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+<div id="page-wrapper">
+    <div class="row">
+        <div class="col-lg-12">
+            <h1 class="page-header">Sửa danh mục con</h1>
+        </div>
+        <!-- /.col-lg-12 -->
+    </div>
+
+
+    @using (Html.BeginForm("ReSubCategory", "CategoryManager"))
+    {
+        @Html.AntiForgeryToken()
+
+        <div class="form-horizontal">
+            <h4>Danh mục con</h4>
+            <hr />
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+            @Html.HiddenFor(model => model.mahienthi)
+
+            <div class="form-group">
+                @Html.Label("Tên danh mục con", new { @class= "control-label col-md-2" })
+                @*@Html.LabelFor(model => model.tendanhmuccon, htmlAttributes: new { @class = "control-label col-md-2" })*@
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.tendanhmuccon, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.tendanhmuccon, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.Label("Số lượng", new { @class = "control-label col-md-2" })
+                @*@Html.LabelFor(model => model.soluong, htmlAttributes: new { @class = "control-label col-md-2" })*@
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.soluong, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.soluong, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.Label("Danh mục", new { @class = "control-label col-md-2" })
+                @*@Html.LabelFor(model => model.danhmucma, htmlAttributes: new { @class = "control-label col-md-2" })*@
+                <div class="col-md-10">
+                    @Html.DropDownListFor(model => model.Category.ma, (IEnumerable<SelectListItem>)ViewBag.Danhmuc, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.danhmucma, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="col-md-offset-2 col-md-10">
+                    <input type="submit" value="Lưu thông tin" class="btn btn-default" onclick="return confirm('Xác nhận thay đổi dữ liệu!')"/>
+                </div>
+            </div>
+        </div>
+    }
+
+    <div>
+        @Html.ActionLink("Quay lại danh mục", "Details", "CategoryManager", new { ma = Model.Category.ma}, new { onclick="confirm ('Bạn chưa lưu thay đổi! Bạn muốn rời mà không hoàn tất thay đổi?')"})
+    </div>
+
+    <script src="~/Scripts/jquery-1.10.2.min.js"></script>
+    <script src="~/Scripts/jquery.validate.min.js"></script>
+    <script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
+</div>
+    

@@ -1,0 +1,71 @@
+﻿@model WebsiteBanHang.Models.Entities.SubCategory
+
+@{
+    ViewBag.Title = "CreateSubCategory";
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
+    string tendanhmuc = ViewBag.tendanhmuc;
+}
+<div id="page-wrapper">
+    <div class="row">
+        <div class="col-lg-12">
+            <h1 class="page-header">@tendanhmuc</h1>
+        </div>
+        <!-- /.col-lg-12 -->
+    </div>
+
+    @using (Html.BeginForm("AddSubCategory", "CategoryManager"))
+    {
+        @Html.AntiForgeryToken()
+
+        <div class="form-horizontal">
+            <h4>Thêm danh mục con</h4>
+            <hr />
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+            <div class="form-group">
+                @Html.Label("Mã danh mục con", htmlAttributes: new { @class = "control-label col-md-2"})
+                @*@Html.LabelFor(model => model.mahienthi, htmlAttributes: new { @class = "control-label col-md-2" })*@
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.mahienthi, new { htmlAttributes = new { @class = "form-control", @style = "width: 300px" } })
+                    @Html.ValidationMessageFor(model => model.mahienthi, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.Label("Tên danh mục con", htmlAttributes: new { @class = "control-label col-md-2" })
+                @*@Html.LabelFor(model => model.tendanhmuccon, htmlAttributes: new { @class = "control-label col-md-2" })*@
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.tendanhmuccon, new { htmlAttributes = new { @class = "form-control", @style="width: 300px" } })
+                    @Html.ValidationMessageFor(model => model.tendanhmuccon, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            @*<div class="form-group">
+                @Html.Label("Mã danh ục con", htmlAttributes: new { @class = "control-label col-md-2" })
+                @Html.LabelFor(model => model.soluong, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.soluong, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.soluong, "", new { @class = "text-danger" })
+                </div>
+            </div>*@
+
+            <div class="form-group">
+                @Html.Label("Danh mục", htmlAttributes: new { @class = "control-label col-md-2" })
+                @*@Html.LabelFor(model => model.danhmucma, "danhmucma", htmlAttributes: new { @class = "control-label col-md-2" })*@
+                <div class="col-md-10">
+                    @Html.Label(tendanhmuc, htmlAttributes: new { @class = "control-label" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="col-md-offset-2 col-md-10">
+                    <input type="submit" value="Thêm mới" class="btn btn-default" onclick="return confirm('Xác nhận thêm mới danh mục con')"/>
+                </div>
+            </div>
+        </div>
+    }
+
+    <div>
+        @Html.ActionLink("Quay lại chi tiết danh mục", "Details", "CategoryManager", new { ma=ViewBag.madanhmuc }, new { onclick = "confirm ('Bạn chưa lưu thay đổi! Bạn muốn rời mà không hoàn tất thay đổi?')" })
+    </div>
+</div>
+    

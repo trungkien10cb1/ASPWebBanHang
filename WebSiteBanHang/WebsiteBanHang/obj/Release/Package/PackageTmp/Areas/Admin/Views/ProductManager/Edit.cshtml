@@ -1,0 +1,97 @@
+﻿@model WebsiteBanHang.Models.Entities.Product
+
+@{
+    ViewBag.Title = "Edit";
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+
+<div id="page-wrapper">
+    <div class="row">
+        <div class="col-lg-12">
+            <h1 class="page-header">Sửa thông tin sản phẩm</h1>
+        </div>
+        <!-- /.col-lg-12 -->
+    </div>
+    @using (Html.BeginForm("EditDetail", "ProductManager", FormMethod.Post, new { @enctype = "multipart/form-data"}))
+    {
+        @Html.AntiForgeryToken()
+
+        <div class="form-horizontal">
+            <h4>Mã sản phẩm: @Model.ma</h4>
+            <hr />
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+            @Html.HiddenFor(model => model.ma)
+
+            <div class="form-group">
+                @Html.Label("Tên sản phẩm", new { @class = "control-label col-md-2" })
+                @*@Html.LabelFor(model => model.tensanpham, htmlAttributes: new { @class = "control-label col-md-2" })*@
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.tensanpham, new { htmlAttributes = new { @class = "form-control", @style="width: 300px" } })
+                    @Html.ValidationMessageFor(model => model.tensanpham, Model.tensanpham, new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.Label("Đơn giá", new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.dongia, new { htmlAttributes = new { @class = "form-control", @style = "width: 300px" } })
+                    @Html.ValidationMessageFor(model => model.dongia, Model.dongia+"", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.Label("Hãng sản xuất", new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.hangsanxuat, new { htmlAttributes = new { @class = "form-control", @style = "width: 300px" } })
+                    @Html.ValidationMessageFor(model => model.hangsanxuat, Model.hangsanxuat, new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.Label("Số lượng", new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.soluong, new { htmlAttributes = new { @class = "form-control", @style = "width: 300px", @min=1 } })
+                    @Html.ValidationMessageFor(model => model.soluong, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.Label("Loại sản phẩm", new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.DropDownListFor(model => model.producttype, (IEnumerable<SelectListItem>)ViewBag.Dongmay, new { htmlAttributes = new { @class = "form-control" } })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.Label("Hình ảnh", new { @class = "control-label col-md-2" })
+                @*@Html.LabelFor(model => model.imglink, htmlAttributes: new { @class = "control-label col-md-2" })*@
+                <div class="col-md-10">
+                    <img src=@Model.imglink style="width:100px; height:100px; float:left"/>
+                    <input type="file" name="imgFile" value="" style="margin-left:50px"/>
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.Label("Mô tả", new { @class = "control-label col-md-2" })
+                @*@Html.LabelFor(model => model.mota, htmlAttributes: new { @class = "control-label col-md-2" })*@
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.mota, new { htmlAttributes = new { @class = "form-control", @style = "width: 300px" } })
+                    @Html.ValidationMessageFor(model => model.mota, Model.mota, new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="col-md-offset-2 col-md-10">
+                    <input type="submit" value="Tiếp tục" class="btn btn-default" />
+                </div>
+            </div>
+        </div>
+    }
+
+    <div>
+        @Html.ActionLink("Quay lại danh sách sản phẩm", "ProductManager", "HomeAd", null, new { onclick = "confirm ('Bạn chưa lưu thay đổi! Bạn muốn rời mà không hoàn tất thay đổi?')" })
+    </div>
+</div>
+
+    
